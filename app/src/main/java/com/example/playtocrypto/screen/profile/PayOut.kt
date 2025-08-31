@@ -1,7 +1,9 @@
 package com.example.playtocrypto.screen.profile
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -13,14 +15,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -33,10 +36,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,7 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.playtocrypto.R
 import com.example.playtocrypto.componat.LocalDimensions
 import com.example.playtocrypto.ui.theme.Backround
-import com.example.playtocrypto.ui.theme.Bulu
+import com.example.playtocrypto.ui.theme.PurpleGrey80
 import com.example.playtocrypto.ui.theme.comla
 import com.example.playtocrypto.ui.theme.green
 import com.example.playtocrypto.ui.theme.litewihet
@@ -65,6 +68,7 @@ fun Payout() {
             .fillMaxSize()
             .background(Backround)
             .padding(respons.dp(12))
+            .verticalScroll(rememberScrollState())
     ) {
 
         Card(
@@ -117,7 +121,7 @@ fun Payout() {
 
                         letterSpacing = respons.sp(.9f),
 
-                    ),
+                        ),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Backround,
                         unfocusedBorderColor = litewihet,
@@ -191,7 +195,7 @@ fun Payout() {
                         onDone = { focusManager.clearFocus() }
                     ),
 
-                )
+                    )
                 Spacer(Modifier.height(respons.dp(4)))
 
                 Row(
@@ -210,31 +214,125 @@ fun Payout() {
                 }
 
                 Spacer(Modifier.height(respons.dp(30)))
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(respons.dp(12)),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(respons.dp(12)),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
 
 
                 ) {
                     Text("You will receive", color = litewihet, fontSize = respons.sp(14f))
-                    Text("0.000000 Ltc", color = with, fontSize = respons.sp(16f), fontWeight = FontWeight.W600)
+                    Text(
+                        "0.000000 Ltc",
+                        color = with,
+                        fontSize = respons.sp(16f),
+                        fontWeight = FontWeight.W600
+                    )
                 }
 
-                Button(onClick = {}
-                    , modifier = Modifier.fillMaxWidth() ,
+                Button(
+                    onClick = {}, modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(respons.dp(9)),
-                    colors = ButtonDefaults.buttonColors(containerColor = green, contentColor = with)
-                    ) {
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = green,
+                        contentColor = with
+                    )
+                ) {
                     Text("Withdraw Now", fontSize = respons.sp(15f))
                 }
 
 
+            }
+        }
 
+
+        Spacer(Modifier.height(respons.dp(20)))
+
+        Text("Withdrawal History", color = with, fontSize = respons.sp(18f))
+        Spacer(Modifier.height(respons.dp(20)))
+        Withdrawallist()
+        Spacer(Modifier.height(respons.dp(12)))
+        Withdrawallist()
+        Spacer(Modifier.height(respons.dp(12)))
+        Withdrawallist()
+        Spacer(Modifier.height(respons.dp(12)))
+        Withdrawallist()
+    }
+}
+
+
+@Composable
+fun Withdrawallist() {
+    val respons = LocalDimensions.current
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(respons.dp(250)),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+        shape = RoundedCornerShape(respons.dp(15)),
+        elevation = CardDefaults.cardElevation(respons.dp(6)),
+        border = BorderStroke(respons.dp(1), color = Color.DarkGray)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    top = respons.dp(18),
+                    start = respons.dp(12),
+                    end = respons.dp(12),
+                    bottom = respons.dp(15)
+                )
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("USDT", color = litewihet, fontSize = respons.sp(18f))
+                Text(
+                    "Success",
+                    color = green,
+                    fontSize = respons.sp(16f),
+                    fontWeight = FontWeight.W600
+                )
+            }
+            Spacer(Modifier.height(respons.dp(20)))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Date/Hora:", color = litewihet, fontSize = respons.sp(18f))
+                Text("22/08/2025 , 02:01", color = litewihet, fontSize = respons.sp(16f))
+            }
+            Spacer(Modifier.height(respons.dp(20)))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Point:", color = litewihet, fontSize = respons.sp(18f))
+                Text("515", color = litewihet, fontSize = respons.sp(16f))
+            }
+            Spacer(Modifier.height(respons.dp(20)))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Value:", color = litewihet, fontSize = respons.sp(18f))
+                Text("0.0051 USDT", color = litewihet, fontSize = respons.sp(16f))
+            }
+            Spacer(Modifier.height(respons.dp(20)))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Wallet:", color = litewihet, fontSize = respons.sp(18f))
+                Text("rethjrhohoiuyhuhsfuiyf4637rgrg7", color = litewihet, fontSize = respons.sp(14f))
             }
         }
     }
+
 }
 
 @Composable
